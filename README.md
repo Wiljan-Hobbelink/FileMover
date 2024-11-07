@@ -18,9 +18,9 @@
   Install all dependencies with:
   ```bash
   pip install tkcalendar python-vlc pymediainfo cryptography sv_ttk
-
-  Configuration
 -------------
+
+## Configuration
 
 1.  **config.json**: Customize paths, file extensions, themes, FTP details, etc.
 2.  **FTP Credentials**: Stored in `ftpConfig/ftp_credentials.json` with encryption enabled.
