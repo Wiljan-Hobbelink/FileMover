@@ -58,6 +58,8 @@ Logging
 
 Logs are saved in the `logs` directory and automatically cleaned up after 14 days.
 
+![App Screenshot](https://github.com/Wiljan-Hobbelink/Filemover/blob/main/Assets/screenshot.jpg)
+
 License
 -------
 
