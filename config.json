@@ -1,6 +1,6 @@
 {
   "source_folders": {
-    "SD Card": ["J:/", "K:/", "C:/CHAT/FileMover/in", "C:/CHAT/FileMover/in2"],
+    "SD Card": ["J:/", "K:/", "C:/FileMover/in", "C:/FileMover/in2"],
     "SXS Reader": "X:/",
     "SSD Drive": "S:/",	
     "XQD Reader": "I:/",	
@@ -14,47 +14,47 @@
     "NH": {
       ".mp4": [
         {
-          "path": "C:/CHAT/FileMover/out/NH/MP4",
+          "path": "C:/FileMover/out/NH/MP4",
           "media_info_tracks": {
           }
         }
       ],
       ".mxf": [
         {
-          "path": "C:/CHAT/FileMover/out/NH/FS6",
+          "path": "C:/FileMover/out/NH/FS6",
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
           }
         },
         {
-          "path": "C:/CHAT/FileMover/out/NH/xdcam",
+          "path": "C:/FileMover/out/NH/xdcam",
           "media_info_tracks": {
             "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
           }
         },
         {
-          "path": "C:/CHAT/FileMover/out/NH/xdcamtest",
+          "path": "C:/FileMover/out/NH/xdcamtest",
           "media_info_tracks": {
           }
         }        
       ],
       ".mkv": [
         {
-          "path": "C:/CHAT/FileMover/out/NH/mkv",
+          "path": "C:/FileMover/out/NH/mkv",
           "media_info_tracks": {
           }
         }
       ],
       ".mov": [
         {
-          "path": "C:/CHAT/FileMover/out/NH/mov",
+          "path": "C:/FileMover/out/NH/mov",
           "media_info_tracks": {
           }
         }
       ],
       ".mts": [
         {
-          "path": "C:/CHAT/FileMover/out/NH/mts",
+          "path": "C:/FileMover/out/NH/mts",
           "media_info_tracks": {
           }
         }
@@ -63,20 +63,20 @@
     "AT5": {
       ".mp4": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/MP4",
+          "path": "C:/FileMover/out/AT5/MP4",
           "media_info_tracks": {
           }
         }
       ],
       ".mxf": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/FS6",
+          "path": "C:/FileMover/out/AT5/FS6",
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
           }
         },
         {
-          "path": "C:/CHAT/FileMover/out/AT5/XDCAM",
+          "path": "C:/FileMover/out/AT5/XDCAM",
           "media_info_tracks": {
             "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
           }
@@ -84,28 +84,28 @@
       ],
       ".avi": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/mxf",
+          "path": "C:/FileMover/out/AT5/mxf",
           "media_info_tracks": {
           }
         }
       ],
       ".mkv": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/mkv",
+          "path": "C:/FileMover/out/AT5/mkv",
           "media_info_tracks": {
           }
         }
       ],
       ".mov": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/mov",
+          "path": "C:/FileMover/out/AT5/mov",
           "media_info_tracks": {
           }
         }
       ],
       ".mts": [
         {
-          "path": "C:/CHAT/FileMover/out/AT5/mts",
+          "path": "C:/FileMover/out/AT5/mts",
           "media_info_tracks": {
           }
         }
@@ -114,20 +114,20 @@
     "XDCAM": {
       ".mp4": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/MP4",
+          "path": "C:/FileMover/out/XDCAM/MP4",
           "media_info_tracks": {
           }
         }
       ],
       ".mxf": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/FS6",
+          "path": "C:/FileMover/out/XDCAM/FS6",
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
           }
         },
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/XDCAM",
+          "path": "C:/FileMover/out/XDCAM/XDCAM",
           "media_info_tracks": {
             "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
           }
@@ -135,28 +135,28 @@
       ],
       ".avi": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/mxf",
+          "path": "C:/FileMover/out/XDCAM/mxf",
           "media_info_tracks": {
           }
         }
       ],
       ".mkv": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/mkv",
+          "path": "C:/FileMover/out/XDCAM/mkv",
           "media_info_tracks": {
           }
         }
       ],
       ".mov": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/mov",
+          "path": "C:/FileMover/out/XDCAM/mov",
           "media_info_tracks": {
           }
         }
       ],
       ".mts": [
         {
-          "path": "C:/CHAT/FileMover/out/XDCAM/mts",
+          "path": "C:/FileMover/out/XDCAM/mts",
           "media_info_tracks": {
           }
         }
