@@ -1,0 +1,171 @@
+{
+  "source_folders": {
+    "SD Card": ["J:/", "K:/", "C:/CHAT/FileMover/in", "C:/CHAT/FileMover/in2"],
+    "SXS Reader": "X:/",
+    "SSD Drive": "S:/",	
+    "XQD Reader": "I:/",	
+    "Overig (D:/)": "D:/"
+  },
+    "default_destinations": {
+	"SD Card": "AT5",
+	"SXS Reader": "XDCAM"
+  },
+  "destination_folders_mapping": {
+    "NH": {
+      ".mp4": [
+        {
+          "path": "C:/CHAT/FileMover/out/NH/MP4",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mxf": [
+        {
+          "path": "C:/CHAT/FileMover/out/NH/FS6",
+          "media_info_tracks": {
+            "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
+          }
+        },
+        {
+          "path": "C:/CHAT/FileMover/out/NH/xdcam",
+          "media_info_tracks": {
+            "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
+          }
+        },
+        {
+          "path": "C:/CHAT/FileMover/out/NH/xdcamtest",
+          "media_info_tracks": {
+          }
+        }        
+      ],
+      ".mkv": [
+        {
+          "path": "C:/CHAT/FileMover/out/NH/mkv",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mov": [
+        {
+          "path": "C:/CHAT/FileMover/out/NH/mov",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mts": [
+        {
+          "path": "C:/CHAT/FileMover/out/NH/mts",
+          "media_info_tracks": {
+          }
+        }
+      ]
+    },
+    "AT5": {
+      ".mp4": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/MP4",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mxf": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/FS6",
+          "media_info_tracks": {
+            "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
+          }
+        },
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/XDCAM",
+          "media_info_tracks": {
+            "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
+          }
+        }
+      ],
+      ".avi": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/mxf",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mkv": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/mkv",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mov": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/mov",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mts": [
+        {
+          "path": "C:/CHAT/FileMover/out/AT5/mts",
+          "media_info_tracks": {
+          }
+        }
+      ]
+    },
+    "XDCAM": {
+      ".mp4": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/MP4",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mxf": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/FS6",
+          "media_info_tracks": {
+            "General": {"codecs_video": "AVC", "commercial_name": "MXF"}
+          }
+        },
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/XDCAM",
+          "media_info_tracks": {
+            "General": {"codecs_video": "MPEG Video", "format_profile": "OP-1a"}
+          }
+        }
+      ],
+      ".avi": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/mxf",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mkv": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/mkv",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mov": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/mov",
+          "media_info_tracks": {
+          }
+        }
+      ],
+      ".mts": [
+        {
+          "path": "C:/CHAT/FileMover/out/XDCAM/mts",
+          "media_info_tracks": {
+          }
+        }
+      ]
+    }
+  },
+  "update_file_listbox": [".mp4", ".avi", ".mkv", ".mov", ".mxf", ".mts"],
+  "theme": "light",
+  "enable_custom_export": true,
+  "enable_ftp_export": true,
+  "perform_hash_check": false
+}
