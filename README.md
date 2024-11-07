@@ -18,3 +18,47 @@
   Install all dependencies with:
   ```bash
   pip install python-vlc pymediainfo cryptography tkcalendar
+
+  Configuration
+-------------
+
+1.  **config.json**: Customize paths, file extensions, themes, FTP details, etc.
+2.  **FTP Credentials**: Stored in `ftpConfig/ftp_credentials.json` with encryption enabled.
+3.  **Logs**: Saved in the `logs` folder and rotated daily.
+
+Usage
+-----
+
+1.  **Run the application**:
+
+    bash
+
+    Code kopiëren
+
+    `python Filemover.py`
+
+2.  **Select a source folder and destination folder**, and choose files to copy or upload.
+
+3.  Use the provided buttons to:
+
+    -   **Play media**
+    -   **Copy files** to the selected destination
+    -   **Upload files** to an FTP server
+4.  Use the progress bar and log messages for tracking the status of operations.
+
+Keyboard Shortcuts
+------------------
+
+-   **F5**: Refresh the file list
+-   **Ctrl+E**: Copy files to a custom location (if enabled)
+-   **Ctrl+F**: Open FTP upload window (if enabled)
+
+Logging
+-------
+
+Logs are saved in the `logs` directory and automatically cleaned up after 14 days.
+
+License
+-------
+
+This project is licensed under the **MIT License**.
