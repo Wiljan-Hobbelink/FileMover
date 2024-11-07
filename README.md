@@ -13,11 +13,11 @@
 ## Requirements
 - **Python 3.x**
 - Required libraries:
-  - `tkinter`, `tkcalendar`, `vlc`, `hashlib`, `pymediainfo`, `cryptography`, `ftplib`
+  - `tkinter`, `tkcalendar`, `vlc`, `hashlib`, `pymediainfo`, `cryptography`, `ftplib`, `fsv_ttk`
   
   Install all dependencies with:
   ```bash
-  pip install python-vlc pymediainfo cryptography tkcalendar
+  pip install tkcalendar python-vlc pymediainfo cryptography sv_ttk
 
   Configuration
 -------------
