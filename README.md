@@ -117,7 +117,7 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
   "perform_hash_check": false
 }
 ```
-### Explanation:
+## Explanation config
 **source_folders:**  Defines paths for source folders, where files can be selected for copying.
 
 **destination_folders_mapping:** Specifies paths for different file types (e.g., .mp4, .mov, etc.) for each destination, with optional media info requirements.
