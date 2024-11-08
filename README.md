@@ -3,12 +3,17 @@
 **FileMover** is a Python-based GUI application for transferring files between selected source and destination folders, with features like file integrity checks, customizable export settings, and FTP upload support. It uses a Tkinter-based interface, VLC for media playback, and allows convenient file management and metadata checking.
 
 ## Features
-- **Copy Files**: Copy files from the source to the destination folder with optional custom destination paths.
-- **FTP Upload**: Upload files to an FTP server with encrypted credentials.
-- **Media Playback**: Play selected media files using VLC.
-- **File Integrity Check**: Optionally verify file integrity via hash comparisons.
-- **Customizable Configuration**: Use `config.json` to define source/destination folders, file extensions, and FTP settings.
-- **Logging**: Maintains logs for operations and automatically deletes logs older than 14 days.
+ **Copy Files**: Copy files from the source to the destination folder with optional custom destination paths.
+ 
+ **FTP Upload**: Upload files to an FTP server with encrypted credentials.
+ 
+ **Media Playback**: Play selected media files using VLC.
+ 
+ **File Integrity Check**: Optionally verify file integrity via hash comparisons.
+ 
+ **Customizable Configuration**: Use `config.json` to define source/destination folders, file extensions, and FTP settings.
+ 
+ **Logging**: Maintains logs for operations and automatically deletes logs older than 14 days.
 
 ## Requirements
 - **Python 3.x**
@@ -114,13 +119,21 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
 ```
 ### Explanation:
 **source_folders:**  Defines paths for source folders, where files can be selected for copying.
+
 **destination_folders_mapping:** Specifies paths for different file types (e.g., .mp4, .mov, etc.) for each destination, with optional media info requirements.
+
 **default_destinations:** Sets default destination folders based on the selected source folder.
+
 **theme:** Sets the theme of the application ("light" or "dark").
+
 **enable_custom_export:** Enables or disables the option to copy files to a custom location. (Ctrl+E)
+
 **enable_ftp_export:** Enables or disables the FTP upload functionality. (Ctrl+F)
+
 **update_file_listbox:** Defines file extensions to display in the file list.
+
 **perform_hash_check:** Enables or disables hash checking to verify file integrity after copying.
+
 
 Usage
 -----
