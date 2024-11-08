@@ -31,7 +31,7 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
 ```json
 {
   "source_folders": {
-    "SD Card": ["J:/", "K:/", "C:/FileMover/in", "C:/FileMover/in2"],
+    "SD Card": ["J:/", "K:/"],
     "SXS Reader": "X:/",
     "SSD Drive": "S:/",
     "XQD Reader": "I:/",
@@ -47,17 +47,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
         {
           "path": "C:/FileMover/out/ProjectA/MP4",
           "media_info_tracks": {
-            "Video": {
-              "format": "AVC",
-              "width": "1920",
-              "height": "1080",
-              "frame_rate": "25.000"
-            },
-            "Audio": {
-              "format": "AAC",
-              "channels": "2",
-              "sample_rate": "48000"
-            }
+            "Video": {"format": "AVC", "width": "1920", "height": "1080", "frame_rate": "25.000"},
+            "Audio": {"format": "AAC", "channels": "2", "sample_rate": "48000"}
           }
         }
       ],
@@ -66,17 +57,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
           "path": "C:/FileMover/out/ProjectA/FS6",
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"},
-            "Video": {
-              "format": "MPEG Video",
-              "width": "1920",
-              "height": "1080",
-              "frame_rate": "29.970"
-            },
-            "Audio": {
-              "format": "PCM",
-              "channels": "2",
-              "sample_rate": "48000"
-            }
+            "Video": {"format": "MPEG Video", "width": "1920", "height": "1080", "frame_rate": "29.970"},
+            "Audio": {"format": "PCM", "channels": "2", "sample_rate": "48000"}
           }
         }
       ]
@@ -86,17 +68,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
         {
           "path": "C:/FileMover/out/ProjectB/MP4",
           "media_info_tracks": {
-            "Video": {
-              "format": "HEVC",
-              "width": "3840",
-              "height": "2160",
-              "frame_rate": "30.000"
-            },
-            "Audio": {
-              "format": "AAC",
-              "channels": "2",
-              "sample_rate": "48000"
-            }
+            "Video": {"format": "HEVC", "width": "3840", "height": "2160", "frame_rate": "30.000"},
+            "Audio": {"format": "AAC", "channels": "2", "sample_rate": "48000"}
           }
         }
       ],
@@ -104,17 +77,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
         {
           "path": "C:/FileMover/out/ProjectB/avi",
           "media_info_tracks": {
-            "Video": {
-              "format": "MPEG-4 Visual",
-              "width": "720",
-              "height": "576",
-              "frame_rate": "25.000"
-            },
-            "Audio": {
-              "format": "MP3",
-              "channels": "2",
-              "sample_rate": "44100"
-            }
+            "Video": {"format": "MPEG-4 Visual", "width": "720", "height": "576", "frame_rate": "25.000"},
+            "Audio": {"format": "MP3", "channels": "2", "sample_rate": "44100"}
           }
         }
       ]
@@ -124,17 +88,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
         {
           "path": "C:/FileMover/out/ProjectC/MP4",
           "media_info_tracks": {
-            "Video": {
-              "format": "AVC",
-              "width": "1280",
-              "height": "720",
-              "frame_rate": "29.970"
-            },
-            "Audio": {
-              "format": "AAC",
-              "channels": "2",
-              "sample_rate": "48000"
-            }
+            "Video": {"format": "AVC", "width": "1280","height": "720", "frame_rate": "29.970"},
+            "Audio": {"format": "AAC", "channels": "2", "sample_rate": "48000"}
           }
         }
       ],
@@ -143,17 +98,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
           "path": "C:/FileMover/out/ProjectC/FS6",
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"},
-            "Video": {
-              "format": "AVC",
-              "width": "1920",
-              "height": "1080",
-              "frame_rate": "29.970"
-            },
-            "Audio": {
-              "format": "PCM",
-              "channels": "2",
-              "sample_rate": "48000"
-            }
+            "Video": {"format": "AVC", "width": "1920", "height": "1080", "frame_rate": "29.970"},
+            "Audio": {"format": "PCM", "channels": "2", "sample_rate": "48000"}
           }
         }
       ]
@@ -171,8 +117,8 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
 **destination_folders_mapping:** Specifies paths for different file types (e.g., .mp4, .mov, etc.) for each destination, with optional media info requirements.
 **default_destinations:** Sets default destination folders based on the selected source folder.
 **theme:** Sets the theme of the application ("light" or "dark").
-**enable_custom_export:** Enables or disables the option to copy files to a custom location.
-**enable_ftp_export:** Enables or disables the FTP upload functionality.
+**enable_custom_export:** Enables or disables the option to copy files to a custom location. (Ctrl+E)
+**enable_ftp_export:** Enables or disables the FTP upload functionality. (Ctrl+F)
 **update_file_listbox:** Defines file extensions to display in the file list.
 **perform_hash_check:** Enables or disables hash checking to verify file integrity after copying.
 
