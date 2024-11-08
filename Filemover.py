@@ -26,6 +26,12 @@ class FileCopyApp:
 
         self.manual_position_update = False
 
+        # Initialize flag to check if copying is in progress
+        self.is_copying = False  
+        
+        # Bind the window close event to a custom handler
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)        
+
         # Set up the directory for FTP configurations
         self.ftp_config_folder = os.path.join(os.getcwd(), 'ftpConfig')
         if not os.path.exists(self.ftp_config_folder):
@@ -849,6 +855,7 @@ class FileCopyApp:
         threading.Thread(target=self.copy_files_thread, daemon=True).start()
 
     def copy_files_thread(self):
+        self.is_copying = True        
         # Disable input controls to prevent user interaction during the copy process
         self.subfolder_entry.config(state="disabled")
         self.date_picker.config(state="disabled")
@@ -874,6 +881,7 @@ class FileCopyApp:
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
+                self.is_copying = False    
                 return
             
             # Retrieve and validate the subfolder name from user input
@@ -886,6 +894,7 @@ class FileCopyApp:
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
+                self.is_copying = False                
                 return
 
             if not subfolder_name:
@@ -895,6 +904,7 @@ class FileCopyApp:
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
+                self.is_copying = False
                 return
 
             # Get selected source and destination folders from the dropdowns
@@ -912,6 +922,7 @@ class FileCopyApp:
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
+                self.is_copying = False
                 return
             
             logging.info(f"Copy button pressed. Copying {len(selected_files)} file(s).")
@@ -976,6 +987,7 @@ class FileCopyApp:
                                 self.source_dropdown.config(state="normal")
                                 self.destination_dropdown.config(state="normal")
                                 self.copy_button.config(state="normal")
+                                self.is_copying = False
                                 return
                             elif overwrite:
                                 logging.info(f"User chose to overwrite '{file_name}'.")
@@ -1023,6 +1035,8 @@ class FileCopyApp:
             
             self.root.after(0, self.copied_files_label_var.set, f"Kopiëren: Voltooid")
             messagebox.showinfo("Kopiëren voltooid", f"Kopiëren voltooid. {completed_files} bestanden gekopieerd naar '{subfolder_name_with_date}'.")
+
+            self.is_copying = False            
         
         except Exception as e:
             # Handle any exceptions that occur during the copy process
@@ -1034,6 +1048,8 @@ class FileCopyApp:
             self.source_dropdown.config(state="normal")
             self.destination_dropdown.config(state="normal")
             self.copy_button.config(state="normal")
+
+            self.is_copying = False
 
     def initialize_date_picker(self):
         # Get the current time and date
@@ -1064,6 +1080,19 @@ class FileCopyApp:
 
         # Schedule to run again at next 00:01
         self.root.after(int(delta_seconds * 1000), self.initialize_date_picker)
+
+    def on_close(self):
+        # Check if a copy action is in progress
+        if self.is_copying:
+            # Ask the user if they really want to close the app
+            if not messagebox.askyesno("Bevestiging", "Een kopieeractie is nog bezig. Weet u zeker dat u wilt afsluiten?"):
+                return  # If 'No' is selected, do nothing
+    
+        # Log application closure
+        logging.info("Application closed by the user.")
+
+        # If no copy in progress or 'Yes' is selected, close the application
+        self.root.destroy()
 
     def __del__(self):
         logging.info("GUI closed.")
