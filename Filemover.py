@@ -13,11 +13,9 @@ from pymediainfo import MediaInfo
 import time
 import threading
 import re
-import importlib
 import sv_ttk
 import ftplib
 from cryptography.fernet import Fernet
-
 
 class FileCopyApp:
     def __init__(self, root):
@@ -226,12 +224,17 @@ class FileCopyApp:
 
         self.key = self.load_key()
 
-        # Code to update and close the splash screen
-        if '_PYIBoot_SPLASH' in os.environ and importlib.util.find_spec("pyi_splash"):
+        # Splash screen handling with logging
+        try:
             import pyi_splash
             pyi_splash.update_text('UI Loaded ...')
             pyi_splash.close()
-            logging.info('Splash screen closed.')    
+            logging.info("Splash screen closed successfully.")
+        except ModuleNotFoundError:
+            logging.info("pyi_splash module not found; skipping splash screen handling.")
+        except Exception as e:
+            logging.error(f"Error closing splash screen: {e}")
+
 
     def cleanup_old_logs(self, log_folder, days=14):
         cutoff_date = datetime.datetime.now() - datetime.timedelta(days=days)
