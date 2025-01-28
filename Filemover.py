@@ -12,6 +12,7 @@ from logging.handlers import TimedRotatingFileHandler
 from pymediainfo import MediaInfo
 import time
 import threading
+import unicodedata
 import re
 import sv_ttk
 import ftplib
@@ -889,15 +890,29 @@ class FileCopyApp:
             
             # Retrieve and validate the subfolder name from user input
             subfolder_name = self.subfolder_entry_var.get().strip()
-            if re.search(r'[\/:"<*>|?]', subfolder_name):
-                logging.warning("Copy button pressed, but file name contains special character.")
-                messagebox.showwarning('Ongeldige naam', r'De naam van de submap mag geen speciale tekens bevatten, zoals /:<\*">?|. Corrigeer de naam en probeer het opnieuw.')
+
+            # 1) Normalize the input to a standard Unicode form (e.g., NFC).
+            subfolder_name = unicodedata.normalize('NFC', subfolder_name)
+
+            # 2) Define a pattern that forbids:
+            #    - Windows-reserved ASCII characters  (\/:*?"<>|)
+            #    - ASCII control characters           [\u0000-\u001F\u007F]
+            #    - Unicode C1 control characters      [\u0080-\u009F]
+            pattern = r'[\u0000-\u001F\u007F-\u009F\\/:*?"<>|]'
+
+            if re.search(pattern, subfolder_name):
+                logging.warning("Copy button pressed, but folder name contains invalid or control characters.")
+                messagebox.showwarning(
+                    'Ongeldige naam',
+                    'De naam van de submap bevat ongeldige of speciale tekens. '
+                    'Corrigeer de naam en probeer het opnieuw.'
+                )
                 self.subfolder_entry.config(state="normal")
                 self.date_picker.config(state="normal")
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
-                self.is_copying = False                
+                self.is_copying = False
                 return
 
             if not subfolder_name:
@@ -1009,16 +1024,26 @@ class FileCopyApp:
                         shutil.copy2(source_path, destination_path)
                         logging.info(f"File '{file_name}' copied to '{destination_path}'.")
 
-                        # Perform hash check if enabled
+                        # --- File Verification Logic ---
                         if perform_hash_check:
+                            # Perform hash check
                             source_hash = self.calculate_file_hash(source_path)
                             destination_hash = self.calculate_file_hash(destination_path)
-
                             if source_hash == destination_hash:
                                 logging.info(f"Hashes match for file '{file_name}'. Copy successful.")
                             else:
                                 logging.info(f"Hashes do not match for file '{file_name}'. Copy may not be successful.")
                                 self.show_error_message(file_name)
+                        else:
+                            # Compare file sizes
+                            source_size = os.path.getsize(source_path)
+                            destination_size = os.path.getsize(destination_path)
+                            if source_size == destination_size:
+                                logging.info(f"File sizes match for '{file_name}'. Copy successful.")
+                            else:
+                                logging.info(f"File sizes do not match for '{file_name}'. Copy may not be successful.")
+                                self.show_error_message(file_name)
+                        # --- End of File Verification Logic ---
 
                         break
 
@@ -1040,7 +1065,7 @@ class FileCopyApp:
             messagebox.showinfo("Kopiëren voltooid", f"Kopiëren voltooid. {completed_files} bestanden gekopieerd naar '{subfolder_name_with_date}'.")
 
             self.is_copying = False            
-        
+
         except Exception as e:
             # Handle any exceptions that occur during the copy process
             logging.error(f"An error occurred during file copying: {str(e)}")
@@ -1053,6 +1078,7 @@ class FileCopyApp:
             self.copy_button.config(state="normal")
 
             self.is_copying = False
+
 
     def initialize_date_picker(self):
         # Get the current time and date
