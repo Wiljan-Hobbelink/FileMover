@@ -51,6 +51,7 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
       ".mp4": [
         {
           "path": "C:/FileMover/out/ProjectA/MP4",
+          "adjust_time": true,
           "media_info_tracks": {
             "Video": {"format": "AVC", "width": "1920", "height": "1080", "frame_rate": "25.000"},
             "Audio": {"format": "AAC", "channels": "2", "sample_rate": "48000"}
@@ -101,6 +102,7 @@ Here is an example configuration file (`config.json`) for setting up **FileMover
       ".mxf": [
         {
           "path": "C:/FileMover/out/ProjectC/FS6",
+          "adjust_time": true,
           "media_info_tracks": {
             "General": {"codecs_video": "AVC", "commercial_name": "MXF"},
             "Video": {"format": "AVC", "width": "1920", "height": "1080", "frame_rate": "29.970"},
