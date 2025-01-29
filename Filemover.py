@@ -859,7 +859,7 @@ class FileCopyApp:
         threading.Thread(target=self.copy_files_thread, daemon=True).start()
 
     def copy_files_thread(self):
-        self.is_copying = True        
+        self.is_copying = True
         # Disable input controls to prevent user interaction during the copy process
         self.subfolder_entry.config(state="disabled")
         self.date_picker.config(state="disabled")
@@ -868,38 +868,47 @@ class FileCopyApp:
         self.copy_button.config(state="disabled")
 
         # Record the start time for measuring the duration of the copy process
-        start_time = time.time() 
+        start_time = time.time()
 
         try:
             # Check if hash check is enabled in the configuration
             perform_hash_check = self.config.get("perform_hash_check", True)
-            
+
             # Validate the selected date from the date picker
             try:
                 selected_date = self.date_picker_var.get()
                 datetime.datetime.strptime(selected_date, "%d-%m-%Y")
             except ValueError:
-                messagebox.showwarning("Ongeldige datum", "De datum moet de notatie dd-mm-jjjj hebben. Corrigeer de datum en probeer het opnieuw.")
+                messagebox.showwarning(
+                    "Ongeldige datum",
+                    "De datum moet de notatie dd-mm-jjjj hebben. "
+                    "Corrigeer de datum en probeer het opnieuw."
+                )
                 self.subfolder_entry.config(state="normal")
                 self.date_picker.config(state="normal")
                 self.source_dropdown.config(state="normal")
                 self.destination_dropdown.config(state="normal")
                 self.copy_button.config(state="normal")
-                self.is_copying = False    
+                self.is_copying = False
                 return
-            
+
             # Retrieve and validate the subfolder name from user input
             subfolder_name = self.subfolder_entry_var.get().strip()
 
             # 1) Normalize the input to a standard Unicode form (e.g., NFC).
             subfolder_name = unicodedata.normalize('NFC', subfolder_name)
 
+<<<<<<< HEAD
+            # 2) Define a pattern that forbids Windows-reserved ASCII chars and control characters
+            pattern = r'[\u0000-\u001F\u007F-\u009F\\/:*?"<>|]'
+=======
             # 2) Define a pattern that forbids:
             #    - Windows-reserved ASCII characters  (\/:*?"<>|)
             #    - ASCII control characters           [\u0000-\u001F\u007F]
             #    - Unicode C1 control characters      [\u0080-\u009F]
             pattern = r'[\u0000-\u001F\u007F-\u009F\\/:*?"<>|]'
 
+>>>>>>> 4ef7c679184ab47df35b991f062579cd2e417278
             if re.search(pattern, subfolder_name):
                 logging.warning("Copy button pressed, but folder name contains invalid or control characters.")
                 messagebox.showwarning(
@@ -928,10 +937,10 @@ class FileCopyApp:
             # Get selected source and destination folders from the dropdowns
             selected_source_folder = self.source_folders[self.selected_source_folder.get()]
             selected_destination_folder = self.destination_folders_mapping[self.selected_destination_folder.get()]
-            
+
             # Get the list of selected files from the listbox
             selected_files = [self.file_listbox.get(i) for i in self.file_listbox.curselection()]
-            
+
             if not selected_files:
                 logging.warning("Copy button pressed, but no files selected.")
                 messagebox.showwarning("Geen bestanden geselecteerd", "Selecteer de bestanden die u wilt kopiëren.")
@@ -942,63 +951,75 @@ class FileCopyApp:
                 self.copy_button.config(state="normal")
                 self.is_copying = False
                 return
-            
+
             logging.info(f"Copy button pressed. Copying {len(selected_files)} file(s).")
-            
+
             total_files = len(selected_files)
             completed_files = 0
-            
+
             # Format the subfolder name with the selected date
-            selected_date = self.date_picker_var.get()
             selected_datetime = datetime.datetime.strptime(selected_date, "%d-%m-%Y")
-            subfolder_name_with_date = selected_datetime.strftime("%y%m%d") + "_" + self.subfolder_entry_var.get().strip()
-            
+            subfolder_name_with_date = selected_datetime.strftime("%y%m%d") + "_" + subfolder_name
+
             # Loop through selected files and copy them to the destination
             for index in self.file_listbox.curselection():
                 source_path, file_name = self.source_folder_paths_and_names[index]
-            
                 _, file_extension = os.path.splitext(file_name.lower())
-            
+
+                # Only proceed if there's a matching extension mapping in the destination folder config
                 if file_extension in selected_destination_folder:
                     destination_info_list = selected_destination_folder[file_extension]
-            
+
+                    # Try each path in this extension's list
                     for destination_info in destination_info_list:
                         destination_path_base = destination_info.get("path")
                         extension_media_info_tracks = destination_info.get("media_info_tracks", {})
-            
-                        mismatch_occurred = False
-            
-                        # Parse media info for the file and check for expected values
+
+                        # --- Media Info Check ---
+                        # Always define media_info
                         media_info = MediaInfo.parse(source_path)
-            
+
+                        # We'll track whether the file’s media info fails the checks
+                        mismatch_occurred = False  
+                        # Also define a default for actual_value
+                        actual_value = None  
+
+                        # Parse media_info tracks, check them against the config if present
                         for track in media_info.tracks:
                             track_type = track.track_type
                             if track_type in extension_media_info_tracks:
-                                logging.info(f"\n{track_type} Info for '{file_name}':")
+                                # For each required attribute + expected value
                                 for attr, expected_value in extension_media_info_tracks[track_type].items():
                                     actual_value = getattr(track, attr, "N/A")
-                                    logging.info(f"{attr.capitalize()}: {actual_value}")
                                     if actual_value != expected_value:
-                                        logging.warning(f"Unexpected value for {attr} in '{file_name}'. Expected: {expected_value}, Actual: {actual_value}")
                                         mismatch_occurred = True
-            
+
+                        # If we found any mismatch, skip copying this file
                         if mismatch_occurred:
-                            logging.warning(f"Skipping copying of file '{file_name}' due to media info mismatches.")
+                            logging.warning(
+                                f"Skipping copying of file '{file_name}' due to media info mismatch. "
+                                f"Last actual_value read: {actual_value}"
+                            )
                             continue
-            
+                        # --- End Media Info Check ---
+
+                        # Build the actual path with date-based subfolder
                         destination_path = os.path.join(destination_path_base, subfolder_name_with_date)
-            
                         if not os.path.exists(destination_path):
                             os.makedirs(destination_path)
-            
+
                         destination_path = os.path.join(destination_path, os.path.basename(file_name))
-            
-                        # Check if the file already exists in the destination
+
+                        # If the file already exists, handle overwrite logic
                         if os.path.exists(destination_path):
-                            overwrite = messagebox.askyesnocancel("Bestand bestaat", f"Het bestand '{file_name}' bestaat al. Wil je het overschrijven?", 
-                                                                default=messagebox.YES)
+                            overwrite = messagebox.askyesnocancel(
+                                "Bestand bestaat",
+                                f"Het bestand '{file_name}' bestaat al. "
+                                "Wil je het overschrijven?",
+                                default=messagebox.YES
+                            )
                             if overwrite is None:
-                                logging.info("User chose to cancel all copying jobs.")
+                                # User chose "Cancel" => cancel entire copy operation
                                 self.progress_var.set(0)
                                 self.subfolder_entry.config(state="normal")
                                 self.date_picker.config(state="normal")
@@ -1010,21 +1031,32 @@ class FileCopyApp:
                             elif overwrite:
                                 logging.info(f"User chose to overwrite '{file_name}'.")
                             else:
-                                logging.info(f"User chose not to overwrite '{file_name}'.")
+                                # User chose 'No' => skip this file
+                                logging.info(f"User chose NOT to overwrite '{file_name}'.")
                                 continue
 
-                        # Increment the counter for completed files and update the GUI
+                        # Update counters, progress
                         completed_files += 1
-                        self.root.after(0, self.copied_files_label_var.set, f"Kopiëren: {completed_files}/{total_files}")
+                        self.root.after(0, self.copied_files_label_var.set,
+                                    f"Kopiëren: {completed_files}/{total_files}")
                         progress_value = (completed_files / total_files) * 100
                         self.progress_var.set(progress_value)
                         self.root.update_idletasks()
 
-                        # Copy the file to the destination
+                        # Copy the file
                         shutil.copy2(source_path, destination_path)
                         logging.info(f"File '{file_name}' copied to '{destination_path}'.")
 
+<<<<<<< HEAD
+                        # If "adjust_time" is True, set the file timestamps to now
+                        if destination_info.get("adjust_time", False):
+                            current_time = time.time()
+                            os.utime(destination_path, (current_time, current_time))
+
+                        # --- Optional File Verification Logic ---
+=======
                         # --- File Verification Logic ---
+>>>>>>> 4ef7c679184ab47df35b991f062579cd2e417278
                         if perform_hash_check:
                             # Perform hash check
                             source_hash = self.calculate_file_hash(source_path)
@@ -1032,7 +1064,21 @@ class FileCopyApp:
                             if source_hash == destination_hash:
                                 logging.info(f"Hashes match for file '{file_name}'. Copy successful.")
                             else:
-                                logging.info(f"Hashes do not match for file '{file_name}'. Copy may not be successful.")
+                                logging.info(
+                                    f"Hashes do not match for file '{file_name}'. "
+                                    f"Copy may not be successful."
+                                )
+                                self.show_error_message(file_name)
+                        else:
+                            source_size = os.path.getsize(source_path)
+                            destination_size = os.path.getsize(destination_path)
+                            if source_size == destination_size:
+                                logging.info(f"File sizes match for '{file_name}'. Copy successful.")
+                            else:
+                                logging.info(
+                                    f"File sizes do not match for '{file_name}'. "
+                                    f"Copy may not be successful."
+                                )
                                 self.show_error_message(file_name)
                         else:
                             # Compare file sizes
@@ -1045,9 +1091,11 @@ class FileCopyApp:
                                 self.show_error_message(file_name)
                         # --- End of File Verification Logic ---
 
+                        # If we successfully copied to this `destination_info`,
+                        # we can break out of the `for destination_info in destination_info_list` loop
                         break
 
-            # Measure the duration of the copy process
+            # Measure the total duration of the copy process
             duration = time.time() - start_time
 
             # Reset GUI controls and show completion message
@@ -1057,19 +1105,34 @@ class FileCopyApp:
             self.source_dropdown.config(state="normal")
             self.destination_dropdown.config(state="normal")
             self.copy_button.config(state="normal")
-            logging.info(f"Copying {completed_files} file(s) to '{subfolder_name_with_date}' completed in {duration:.2f} seconds.")
+
+            logging.info(
+                f"Copying {completed_files} file(s) to '{subfolder_name_with_date}' "
+                f"completed in {duration:.2f} seconds."
+            )
+
             current_date = datetime.datetime.now().strftime("%d-%m-%Y")
             self.date_picker_var.set(current_date)
-            
-            self.root.after(0, self.copied_files_label_var.set, f"Kopiëren: Voltooid")
-            messagebox.showinfo("Kopiëren voltooid", f"Kopiëren voltooid. {completed_files} bestanden gekopieerd naar '{subfolder_name_with_date}'.")
 
+<<<<<<< HEAD
+            self.root.after(0, self.copied_files_label_var.set, "Kopiëren: Voltooid")
+            messagebox.showinfo(
+                "Kopiëren voltooid",
+                f"Kopiëren voltooid. {completed_files} bestanden gekopieerd naar '{subfolder_name_with_date}'."
+            )
+
+            self.is_copying = False
+=======
             self.is_copying = False            
+>>>>>>> 4ef7c679184ab47df35b991f062579cd2e417278
 
         except Exception as e:
             # Handle any exceptions that occur during the copy process
             logging.error(f"An error occurred during file copying: {str(e)}")
-            messagebox.showerror("Fout", f"Er is een fout opgetreden tijdens het kopiëren van de bestanden: {str(e)}")
+            messagebox.showerror(
+                "Fout",
+                f"Er is een fout opgetreden tijdens het kopiëren van de bestanden: {str(e)}"
+            )
             self.progress_var.set(0)
             self.subfolder_entry.config(state="normal")
             self.date_picker.config(state="normal")
@@ -1080,6 +1143,10 @@ class FileCopyApp:
             self.is_copying = False
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4ef7c679184ab47df35b991f062579cd2e417278
     def initialize_date_picker(self):
         # Get the current time and date
         now = datetime.datetime.now()
